@@ -747,8 +747,10 @@ body {
           align-items: center;
 }
 .header__nav {
-  margin-left: 93px;
   margin-right: auto;
+}
+.header__logo {
+  margin-right: 93px;
 }
 .header__contacts {
   display: -webkit-box;
@@ -983,8 +985,8 @@ body {
           align-items: baseline;
   gap: 93px;
 }
-.footer__address {
-  margin-top: 20px;
+.footer__logo {
+  margin-bottom: 20px;
 }
 .footer__contacts :not(:last-child) {
   margin-bottom: 9px;

@@ -16,8 +16,8 @@
     @extend %visually-hidden;
   }
 
-  &__address {
-    margin-top: 20px;
+  &__logo {
+    margin-bottom: 20px;
   }
 
   &__contacts :not(:last-child) {
