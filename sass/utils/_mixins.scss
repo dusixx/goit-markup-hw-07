@@ -1,0 +1,268 @@
+@use "sass:map";
+
+///////////////////////
+// font
+///////////////////////
+
+// prettier-ignore
+@mixin fontFace($weight: (100, 200, 300, 400, 500, 600, 700, 800, 900), $args...) {
+  @each $w in $weight {
+    @include _fontFace($weight: $w, $args...);
+  }
+}
+
+// prettier-ignore
+@mixin _fontFace(
+  $family: "", 
+  $italic: false, 
+  $weight: 400, 
+  $display: "swap",
+  $path: "../../fonts",
+  $ver: null,
+  $interfix: "",
+  $svgId: "",
+  $suffix: "")
+{
+  @if(not isNonEmptyStr($family)) { 
+    @error "$family: non empty string expected"; 
+  }
+
+  @if(not isValidFontWeight($weight)) { 
+    @error "$weight: invalid value"; 
+  }
+
+  @if(not isInt($ver) or $ver <= 0) { 
+    @error "$ver: positive integer expected"; 
+  }
+
+  @if(not isNonEmptyStr($svgId)) {
+    $svgId: $family;
+    @warn "$svgId is missing";
+  }
+
+  $suffix: if($weight == 400, 
+    if($italic, "italic", "regular"),
+    if($italic, "#{$weight}italic", $weight)
+  );
+
+  $interfix: if(isNonEmptyStr($interfix),"-#{$interfix}", "");
+  $fileName: to-lower-case("#{$family}-v#{$ver}#{$interfix}-#{$suffix}");
+  $path: '#{$path}/#{to-lower-case($family)}/v#{$ver}';
+
+  @font-face {
+    font-family: $family;
+    font-style: if($italic, italic, normal);
+    font-weight: $weight;
+    font-display: $display;
+
+    src: url('#{$path}/#{$fileName}.eot');
+    src: local(""), 
+      url('#{$path}/#{$fileName}.eot?#iefix') format('embedded-opentype'), 
+      url('#{$path}/#{$fileName}.woff2') format('woff2'),
+      url('#{$path}/#{$fileName}.woff') format('woff'),
+      url('#{$path}/#{$fileName}.ttf') format('truetype'),
+      url('#{$path}/#{$fileName}.svg##{$svgId}') format('svg');
+  }
+}
+
+// prettier-ignore
+@mixin font(
+  $fam: null,
+  $sz: null,
+  $wt: null,
+  $lh: null,
+  $ls: null,
+  $tt: null,
+  $color: null,
+  $decor: null,
+  $align: null) 
+{
+  // fam: string|list
+  font-family: $fam;
+  font-size: $sz;
+  font-weight: $wt;
+  letter-spacing: $ls;
+  color: $color;
+  text-align: $align;
+  text-decoration: $decor; 
+
+  @if(isNum($lh) and not unitless($lh) and isNum($sz)) {
+    // с нативной css calc(): inherit и тп не работают; 
+    // sass все-равно подставляет в css результат
+    $lh: calcLineHeight($lh, $sz);
+  } 
+  line-height: $lh;
+
+  @if($tt) {
+    $alias: ("upper": uppercase, "lower": lowercase, "cap": capitalize);
+    $tt: map-get($alias, $tt) or $tt;
+    text-transform: $tt;
+  }
+}
+
+///////////////////////
+// misc
+///////////////////////
+
+// prettier-ignore
+@mixin mainTransition($props...) {
+  @include transition(
+    $mainTransitionDur, 
+    $mainTransitionFunc,
+    null,
+    null,
+    $props...);
+}
+
+// prettier-ignore
+@mixin transition(
+  $dur: 250ms, 
+  $func: "ease",
+  $origin: "center",
+  $delay: 0s,
+  $props...) 
+{
+  transition-property: $props;
+  transition-duration: $dur;
+  transition-timing-function: $func;
+  transform-origin: $origin;
+  transition-delay: $delay;
+}
+
+@mixin circle($diameter, $display: null) {
+  @if (isNonEmptyStr($display)) {
+    display: $display;
+  }
+
+  width: $diameter;
+  height: $diameter;
+  border-radius: 50%;
+}
+
+// prettier-ignore
+@mixin bg(
+  $pos: center, 
+  $size: contain,
+  $repeat: no-repeat,
+  $color:null,
+  $origin: null, 
+  $img: null) 
+{
+  background-origin: $origin;
+  background-size: $size;
+  
+  @if (isList($img)) {
+    $img: setSeparator($img, "comma");
+  }
+  background-image: $img;
+  background-repeat: $repeat;
+  background-position: $pos;
+  background-color: $color;
+}
+
+///////////////////////
+// positioning
+///////////////////////
+
+// включать в родительском блоке
+// block__list > block__list-item (&-item)
+@mixin cardset($itemsPerRow, $gap: normal, $itemSelector: "&-item") {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $gap;
+
+  @if (not isInt($itemsPerRow) or $itemsPerRow <= 0) {
+    @error "$itemsPerRow: positive integer expected";
+  }
+
+  #{$itemSelector} {
+    $gapsTotal: $gap * ($itemsPerRow - 1);
+    flex-basis: calc((100% - $gapsTotal) / $itemsPerRow);
+  }
+}
+
+@mixin flexCenter($axis: "both", $gap: null) {
+  display: flex;
+  gap: $gap;
+
+  @if ($axis == "main" or $axis == "both") {
+    justify-content: center;
+  }
+
+  @if ($axis == "cross" of $axis == "both") {
+    align-items: center;
+  }
+}
+
+@mixin positioned($type: absolute, $args...) {
+  $posProps: (
+    "top": y -1,
+    "left": x -1,
+    "bottom": y 1,
+    "right": x 1,
+  );
+  $etcProps: ("width", "height", "min-width", "min-height", "max-width", "max-height");
+  $allPropsNames: join(map-keys($posProps), $etcProps);
+  $translate: ();
+
+  // position: fixed|absolute|...
+  @if (isNonEmptyStr($type)) {
+    position: #{$type};
+  }
+
+  @each $propName in $allPropsNames {
+    // case-sensitive
+    @if (hasArg($args, $propName)) {
+      $argName: $propName;
+      $argValue: getArg($args, $argName);
+      //
+      // argName: top|left|right|bottom
+      @if (map-has-key($posProps, $argName)) {
+        //
+        $offset: null;
+        $posPropData: map-get($posProps, $argName);
+        $axis: nth($posPropData, 1);
+        $dir: nth($posPropData, 2);
+
+        // argValue: value offset
+        @if (isList($argValue) and length($argValue) >= 2) {
+          // argValue ниже уже переопределен
+          $offset: nth($argValue, 2);
+          $argValue: nth($argValue, 1);
+        }
+
+        @if ($argValue == "center") {
+          //
+          // bottom|right не перебивают translate для top|left.
+          // Если в translate есть "x" и argName == right - игнорируем его.
+          // Так как ранее уже был учтен left. Аналогично top|bottom
+          $valid: not (($argName == "bottom" or $argName == "right") and map-has-key($translate, $axis));
+          @if ($valid) {
+            $translate: map.set($translate, $axis, $dir * 50%);
+            #{$argName}: 50%;
+          }
+          //
+        } @else {
+          #{$argName}: #{$argValue};
+          // @if(0 -> true), @if(null -> false)
+          @if ($offset) {
+            $translate: map.set($translate, $axis, $offset);
+          }
+        }
+        // argName: width|height|...
+      } @else {
+        #{$argName}: #{$argValue};
+      }
+    }
+  }
+
+  $x: map-get($translate, "x");
+  $y: map-get($translate, "y");
+  $trans: setSeparator(getArg($args, "transform"), "space");
+
+  @if ($x or $y) {
+    $trans: $trans translate(#{$x or 0}, #{$y or 0});
+  }
+
+  transform: $trans;
+}

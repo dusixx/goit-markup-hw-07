@@ -1,0 +1,15 @@
+.team {
+  @extend %section;
+  min-width: $containerWidth;
+  background-color: $colorGreyLight;
+
+  &__list {
+    @include cardset(4, 30px);
+  }
+
+  &__list-item {
+    background-color: white;
+    border-radius: 0px 0px 4px 4px;
+    box-shadow: 0px 1px 3px rgba(black, 0.12), 0px 1px 1px rgba(black, 0.14), 0px 2px 1px rgba(black, 0.2);
+  }
+}

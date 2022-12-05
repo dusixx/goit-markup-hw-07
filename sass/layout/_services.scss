@@ -1,0 +1,25 @@
+.services {
+  @extend %section;
+
+  &__list {
+    @include cardset(3, 30px);
+  }
+}
+
+.service {
+  position: relative;
+
+  &__overlay {
+    @include positioned($left: 0, $bottom: 0, $width: 100%, $height: 70px);
+    @include flexCenter();
+    padding: 0 20px;
+
+    @include font($wt: 700, $sz: $mainFontSize, $lh: 16px, $tt: "upper", $color: white);
+
+    background-color: rgba(47, 48, 58, 0.8);
+    backdrop-filter: blur(1px);
+
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}

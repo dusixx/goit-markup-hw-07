@@ -1,0 +1,20 @@
+.team-member {
+  &__desc {
+    padding: 30px 0;
+    text-align: center;
+  }
+
+  &__name {
+    margin-bottom: 10px;
+    @include font($wt: 500, $sz: 16px, $lh: 19px, $color: $colorTextSec);
+  }
+
+  &__pos {
+    margin-bottom: 16px;
+    @include font($sz: 16px, $lh: 19px);
+  }
+
+  &__socials {
+    @include flexCenter($gap: 10px);
+  }
+}

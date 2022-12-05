@@ -1,0 +1,42 @@
+%btn {
+  display: block;
+
+  @include font($fam: inherit, $sz: 16px);
+
+  border-radius: 4px;
+  border-style: none;
+  cursor: pointer;
+}
+
+%btn-primary {
+  @extend %btn;
+  padding: 10px 0;
+
+  @include font($wt: 700, $sz: 16px, $lh: 30px, $ls: 0.06em, $color: white);
+
+  box-shadow: 0px 4px 4px rgba(black, 0.15);
+  background-color: $colorAccent;
+  @include mainTransition(background-color);
+
+  &:hover,
+  &:focus-visible {
+    background-color: #188ce8;
+  }
+}
+
+%btn-secondary {
+  @extend %btn;
+  padding: 6px 22px;
+
+  @include font($wt: 500, $sz: 16px, $lh: 26px, $ls: 0.03em, $color: $colorTextSec);
+
+  background-color: $colorGreyLight;
+  @include mainTransition(color, background-color, box-shadow);
+
+  &:hover,
+  &:focus-visible {
+    color: white;
+    background-color: $colorAccent;
+    box-shadow: 0px 3px 1px rgba(black, 0.1), 0px 1px 2px rgba(black, 0.08), 0px 2px 2px rgba(black, 0.12);
+  }
+}

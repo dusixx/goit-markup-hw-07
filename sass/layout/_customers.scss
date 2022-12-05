@@ -1,0 +1,26 @@
+.customers {
+  @extend %section;
+
+  &__list {
+    @include cardset(6, 30px);
+  }
+
+  &__link {
+    @extend %link;
+
+    @include flexCenter();
+    height: 92px;
+
+    color: #afb1b8;
+    @include mainTransition(color);
+
+    border: 1px solid;
+    border-radius: 4px;
+  }
+
+  &__logo {
+    width: 106px;
+    height: 60px;
+    fill: currentColor;
+  }
+}

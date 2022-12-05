@@ -1,0 +1,100 @@
+@use "sass:math";
+@use "sass:meta";
+
+@function isStr($v) {
+  @return (type-of($v) == "string");
+}
+
+@function isNonEmptyStr($v) {
+  @return (isStr($v) and str-length($v) > 0);
+}
+
+@function isNum($v) {
+  @return (type-of($v) == "number");
+}
+
+@function isInt($v) {
+  @return isNum($v) and round($v) == $v;
+}
+
+@function isList($v) {
+  @return (type-of($v) == "list");
+}
+
+@function isMissing($v) {
+  @return $v == null;
+}
+
+@function isDef($varName, $scope: null) {
+  @if ($scope == "global") {
+    @return global-variable-exists($varName);
+  }
+
+  @if ($scope == "any") {
+    @return variable-exists($varName) or global-variable-exists($varName);
+  }
+  // local
+  @return variable-exists($varName);
+}
+
+@function isValidFontWeight($weigth) {
+  @for $i from 1 through 9 {
+    @if ($weigth == ($i * 100)) {
+      @return true;
+    }
+  }
+
+  @return false;
+}
+
+@function stripUnit($num) {
+  @return if(isNum($num), math.div($num, ($num * 0 + 1)), null);
+}
+
+@function toFixed($num, $fract) {
+  @if (not isNum($num)) {
+    @error "$num: number expected";
+  }
+
+  @if (isNum($fract)) {
+    $powTen: math.pow(10, math.round($fract));
+    @return math.div(math.round($num * $powTen), $powTen);
+  }
+
+  @return $num;
+}
+
+@function divide($num1, $num2, $fract: -1, $unitless: false) {
+  @if (not(isNum($num1) and isNum($num2))) {
+    @error "$num1, $num2: numbers expected";
+  }
+
+  @if (not isInt($fract)) {
+    @error "$fract: integer expected";
+  }
+
+  @if ($unitless) {
+    $num1: stripUnit($num1);
+    $num2: stripUnit($num2);
+  }
+
+  $result: math.div($num1, $num2);
+  @return if($fract >= 0, toFixed($result, $fract), $result);
+}
+
+@function calcLineHeight($fontSize, $lineHeight) {
+  @return divide($fontSize, $lineHeight, $unitless: true, $fract: 2);
+}
+
+@function getArg($args, $name) {
+  @return map-get(meta.keywords($args), $name);
+}
+
+@function hasArg($args, $name) {
+  @return map-has-key(meta.keywords($args), $name);
+}
+
+// $separator: comma|space|slash|auto
+@function setSeparator($list, $separator) {
+  @return join($list, (), $separator);
+}

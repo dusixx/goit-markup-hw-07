@@ -1,0 +1,14 @@
+html {
+  // chrome://flags/#smooth-scrolling
+  scroll-behavior: smooth;
+}
+
+// prettier-ignore
+body {
+  @include font(
+    $fam: $mainFontFamily, 
+    $sz: $mainFontSize, 
+    $ls: $mainFontLetterSpacing, 
+    $color: $colorText
+  );
+}

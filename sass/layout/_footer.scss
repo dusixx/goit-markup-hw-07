@@ -1,0 +1,49 @@
+.footer {
+  height: $footerHeight;
+  min-width: $containerWidth;
+  padding: 60px 0;
+
+  background-color: $colorGreyDark;
+
+  &__container {
+    @extend .container;
+    display: flex;
+    align-items: baseline;
+    gap: 93px;
+  }
+
+  &__title {
+    @extend %visually-hidden;
+  }
+
+  &__address {
+    margin-top: 20px;
+  }
+
+  &__contacts :not(:last-child) {
+    margin-bottom: 9px;
+  }
+
+  &__contact-link {
+    @include font($sz: $mainFontSize, $lh: 24px, $color: rgba(white, 0.6));
+    @include mainTransition(color);
+  }
+
+  &__subtitle {
+    display: block;
+    margin-bottom: 20px;
+    @include font($wt: 700, $sz: $mainFontSize, $lh: 16px, $color: white, $tt: "upper");
+  }
+
+  &__socials {
+    @include flexCenter($gap: 10px);
+  }
+}
+
+.footer__contact-link {
+  @extend %link;
+
+  &--accent {
+    color: white;
+  }
+}

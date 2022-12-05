@@ -1,0 +1,115 @@
+.ordering {
+  &__text-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    margin-bottom: 20px;
+    @include font($sz: 12px, $lh: 14px, $ls: 0.01em);
+  }
+
+  &__text-input {
+    width: 100%;
+    height: 40px;
+    padding: 0 42px;
+
+    outline: unset;
+    border: 1px solid rgba(33, 33, 33, 0.2);
+    border-radius: 4px;
+    @include mainTransition(border-color);
+  }
+
+  &__field--required &__label::after {
+    content: "*";
+    color: $colorWarn;
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  &__input-wrapper {
+    position: relative;
+  }
+
+  &__field-icon {
+    @include positioned($left: 12px, $top: "center", $width: 18px, $height: 18px);
+
+    fill: $colorTextSec;
+    cursor: text;
+    @include mainTransition(fill);
+  }
+
+  // textarea
+  &__text-input--multiline {
+    display: block;
+    padding: 12px 16px;
+    height: 120px;
+    resize: none;
+  }
+
+  &__btn {
+    @extend %btn-primary;
+    margin: 0 auto;
+    min-width: 200px;
+  }
+
+  &__check {
+    @include font($sz: 14px, $lh: 24px);
+    margin-bottom: 30px;
+  }
+
+  &__terms-link {
+    @extend %custom-link;
+    margin-left: 3px;
+    color: $colorAccent;
+  }
+}
+
+.ordering__text-input::placeholder {
+  color: rgba(117, 117, 117, 0.5);
+}
+
+// focus-within позволяет ставить fill для иконки
+// при ховере на нее в составе div-контейнера
+// Того же можно добиться, если убрать div (label > svg)
+.ordering__field {
+  &:focus-within,
+  &:hover {
+    .ordering__text-input {
+      border-color: $colorAccent;
+    }
+
+    .ordering__field-icon {
+      fill: $colorAccent;
+    }
+  }
+}
+
+/////////////////////
+// input-notice
+/////////////////////
+
+.ordering__icon-notice {
+  @extend %icon-notice;
+  @include positioned($right: 12px, $top: "center", $width: 18px, $height: 18px);
+}
+
+.ordering__text-input--with-notice {
+  @extend %input-notice;
+
+  @include textInputActive("valid") {
+    border-color: $colorSuccess;
+    & ~ .ordering__field-icon {
+      fill: $colorSuccess;
+    }
+  }
+
+  @include textInputActive("invalid") {
+    border-color: $colorWarn;
+    & ~ .ordering__field-icon {
+      fill: $colorWarn;
+    }
+  }
+}

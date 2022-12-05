@@ -1,0 +1,42 @@
+.subscribe {
+  flex-grow: 1;
+
+  &__form {
+    display: flex;
+    justify-content: flex-start;
+    gap: 12px;
+  }
+
+  &__text-input {
+    flex-basis: 358px;
+    padding-left: 16px;
+
+    @include font($sz: 16px, $lh: 20px, $color: rgba(white, 0.6));
+
+    background-color: transparent;
+    filter: drop-shadow(0px 4px 4px rgba(black, 0.15));
+
+    outline: unset;
+    border-radius: 4px;
+    border: 1px solid rgba(white, 0.3);
+    @include mainTransition(border-color);
+  }
+
+  &__btn {
+    @extend %btn-primary;
+    @include flexCenter($gap: 10px);
+    flex-grow: 1;
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.subscribe__text-input {
+  &:focus-visible,
+  &:hover {
+    border-color: $colorAccent;
+  }
+}

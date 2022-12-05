@@ -1,0 +1,18 @@
+.filter {
+  &__label {
+    @extend %btn-secondary;
+  }
+
+  &__input {
+    @extend %visually-hidden;
+  }
+
+  &__input:checked + &__label {
+    color: white;
+    background-color: $colorAccent;
+  }
+
+  &__input:focus-visible + &__label {
+    box-shadow: 0 0 0 2px $colorGreyDark;
+  }
+}

@@ -1,0 +1,32 @@
+.works {
+  @extend %section;
+
+  &__filters-list {
+    @include flexCenter($gap: 8px);
+  }
+
+  &__title {
+    @extend %visually-hidden;
+  }
+
+  &__list {
+    @include cardset(3, 30px);
+    margin-top: 50px;
+  }
+
+  &__link {
+    display: block;
+    @include mainTransition(box-shadow);
+  }
+}
+
+.works__link {
+  &:hover,
+  &:focus-visible {
+    box-shadow: 0px 1px 1px rgba(black, 0.12), 0px 4px 4px rgba(black, 0.06), 1px 4px 6px rgba(black, 0.16);
+
+    .work__overlay {
+      transform: translateY(0);
+    }
+  }
+}

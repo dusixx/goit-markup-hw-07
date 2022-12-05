@@ -1,0 +1,39 @@
+.advantages {
+  padding-top: 94px;
+  padding-bottom: 0;
+
+  &__title {
+    @extend %visually-hidden;
+  }
+
+  &__list {
+    @include cardset(4, 30px);
+    align-items: flex-start;
+  }
+}
+
+.advantage {
+  &__thumb {
+    @include flexCenter();
+
+    height: 120px;
+    margin-bottom: 30px;
+
+    background-color: $colorGreyLight;
+    border-radius: 4px;
+  }
+
+  &__icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  &__subtitle {
+    margin-bottom: 10px;
+    @include font($sz: $mainFontSize, $lh: 16px, $color: $colorTextSec, $tt: "upper");
+  }
+
+  &__text {
+    @include font($sz: $mainFontSize, $lh: 24px);
+  }
+}

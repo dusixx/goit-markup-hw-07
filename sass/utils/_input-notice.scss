@@ -1,0 +1,36 @@
+//
+// input.%input-notice ~ svg.icon-notice > use.valid + use.invalid
+//
+
+%icon-notice {
+  .valid {
+    fill: $colorSuccess;
+  }
+
+  .invalid {
+    fill: $colorWarn;
+  }
+
+  :nth-child(n) {
+    opacity: 0;
+    @include mainTransition(opacity);
+  }
+}
+
+%input-notice {
+  &:not(:placeholder-shown):valid ~ %icon-notice .valid,
+  &:not(:placeholder-shown):invalid ~ %icon-notice .invalid {
+    opacity: 1;
+  }
+}
+
+// включать в блоке целевого input
+@mixin textInputActive($state) {
+  @if (index(("valid", "invalid"), to-lower-case($state))) {
+    // & -> input
+    &:not(:placeholder-shown):#{$state}:hover,
+    &:not(:placeholder-shown):#{$state}:focus-visible {
+      @content;
+    }
+  }
+}

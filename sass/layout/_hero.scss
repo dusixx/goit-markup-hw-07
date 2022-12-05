@@ -1,0 +1,30 @@
+.hero {
+  height: $heroHeight;
+  max-width: $sectionWidth;
+  min-width: $containerWidth;
+
+  margin: 0 auto;
+  padding: 200px 0;
+
+  background-color: #c4c4c4;
+
+  &--with-bgi {
+    @include bg(
+      $size: cover,
+      $img: linear-gradient($colorHeroOverlay, $colorHeroOverlay) url("../images/hero/hero-bg.jpg")
+    );
+  }
+
+  &__title {
+    margin: 0 auto 30px auto;
+    width: 696px;
+
+    @include font($wt: 900, $sz: 44px, $lh: 60px, $ls: 0.06em, $color: white, $tt: "upper", $align: center);
+  }
+
+  &__btn {
+    @extend %btn-primary;
+    min-width: 216px;
+    margin: 0 auto;
+  }
+}

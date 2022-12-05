@@ -1,0 +1,43 @@
+// vendors
+@import "./vendors/modern-normalize";
+@import "./vendors/visually-hidden";
+
+// utils
+@import "./utils/valiables";
+@import "./utils/functions";
+@import "./utils/mixins";
+@import "./utils/placeholders";
+@import "./utils/btn";
+@import "./utils/custom-link";
+@import "./utils/input-notice";
+
+// base
+@import "./base/reset";
+@import "./base/fonts";
+@import "./base/base";
+
+// components
+@import "./components/typography";
+@import "./components/logo";
+@import "./components/work";
+@import "./components/site-nav";
+@import "./components/team-member";
+@import "./components/custom-check";
+@import "./components/filter";
+@import "./components/socials-link";
+@import "./components/scroll-off";
+
+// layout
+@import "./layout/container";
+@import "./layout/header";
+@import "./layout/hero";
+@import "./layout/advantages";
+@import "./layout/services";
+@import "./layout/team";
+@import "./layout/customers";
+@import "./layout/footer";
+@import "./layout/subscribe";
+@import "./layout/backdrop";
+@import "./layout/modal";
+@import "./layout/ordering";
+@import "./layout/works";

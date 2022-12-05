@@ -1,0 +1,16 @@
+.logo {
+  display: block;
+  @include font($fam: "Raleway", $sz: 26px, $lh: 31px, $color: $colorAccent, $decor: none);
+
+  &--theme-light {
+    .logo__suffix {
+      color: $colorLogoSuffixDark;
+    }
+  }
+
+  &--theme-dark {
+    .logo__suffix {
+      color: $colorLogoSuffixLight;
+    }
+  }
+}

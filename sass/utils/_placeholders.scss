@@ -1,0 +1,13 @@
+%section {
+  padding-top: $sectionPaddingVer;
+  padding-bottom: $sectionPaddingVer;
+}
+
+%link {
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    color: $colorAccent;
+  }
+}

@@ -1,0 +1,31 @@
+@mixin linkActive($color, $bgColor) {
+  &:hover,
+  &:focus-visible {
+    color: $color;
+    background-color: $bgColor;
+  }
+}
+
+.socials-link {
+  @include flexCenter();
+  @include circle(44px);
+  @include mainTransition(color, background-color);
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  @include linkActive(white, $colorAccent);
+}
+
+.socials-link--theme-light {
+  color: #afb1b8;
+  background-color: unset;
+}
+
+.socials-link--theme-dark {
+  color: white;
+  background-color: rgba(white, 0.1);
+}

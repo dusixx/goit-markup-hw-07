@@ -1,0 +1,44 @@
+.modal {
+  @include positioned($top: center, $left: center, $width: 528px, $min-heigth: 581px, $transform: scale(1));
+
+  padding: 40px;
+
+  background-color: white;
+  border-radius: 4px;
+
+  box-shadow: 0px 1px 3px rgba(black, 0.12), 0px 1px 1px rgba(black, 0.14), 0px 2px 1px rgba(black, 0.2);
+
+  @include mainTransition(transform);
+
+  &__btn-close {
+    @extend %link;
+    @extend %btn;
+
+    @include positioned($top: 8px, $right: 8px);
+    padding: 0;
+
+    // lh:0 для центрирования контента (&times;)
+    @include font($sz: 24px, $lh: 0, $color: $colorTextSec);
+    @include mainTransition(color);
+
+    @include circle(30px);
+    background-color: transparent;
+    border: 1px solid rgba(black, 0.1);
+  }
+
+  &__title {
+    display: block;
+    margin-bottom: 12px;
+
+    @include font($wt: 700, $sz: 20px, $lh: 23px, $color: $colorTextSec, $align: center);
+
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+.backdrop--hidden {
+  .modal {
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+}
