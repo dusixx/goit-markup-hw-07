@@ -7,6 +7,7 @@
     closeModalBtn: document.querySelector("[data-modal-close]"),
     modal: document.querySelector("[data-modal]"),
     body: document.querySelector("body"),
+    root: document.documentElement,
   };
 
   refs.openModalBtn.addEventListener("click", toggleModal);
@@ -19,14 +20,39 @@
   // Functions
   ////////////////////////
 
-  function resetOrderingForm() {
-    const { formOrdering } = document.forms;
-    formOrdering.reset();
+  function getVar(varName) {
+    return refs.root.style.getPropertyValue(varName);
+  }
+
+  function setVar(varName, val) {
+    refs.root.style.setProperty(varName, val);
   }
 
   function toggleModal() {
     refs.modal.classList.toggle(cls_backdrop_hidden);
-    refs.body.classList.toggle(cls_scroll_off);
+
+    const modalIsShown = !refs.modal.classList.contains(cls_backdrop_hidden);
+    toggleScroll(modalIsShown);
+  }
+
+  function toggleScroll(scrollOff) {
+    if (scrollOff) {
+      // запоминаем текущую позицию скрола
+      setVar("--scroll-top", window.pageYOffset);
+      refs.body.classList.add(cls_scroll_off);
+      //
+    } else {
+      refs.body.classList.remove(cls_scroll_off);
+      // перекрываем smooth, иначе сработает на закрытие модалки
+      refs.root.style.scrollBehavior = "auto";
+      window.scrollTo({ top: getVar("--scroll-top") });
+      refs.root.style.removeProperty("scroll-behavior");
+    }
+  }
+
+  function resetOrderingForm() {
+    const { formOrdering } = document.forms;
+    formOrdering.reset();
   }
 
   function logFormsData() {
