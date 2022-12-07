@@ -25,7 +25,7 @@
 }
 
 // включать в блоке целевого input
-@mixin textInputActive($state) {
+@mixin textInputFocused($state) {
   @if (index(("valid", "invalid"), to-lower-case($state))) {
     // & -> input
     &:not(:placeholder-shown):#{$state}:hover,

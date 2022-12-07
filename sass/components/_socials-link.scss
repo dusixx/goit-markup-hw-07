@@ -1,4 +1,4 @@
-@mixin linkActive($color, $bgColor) {
+@mixin linkFocused($color, $bgColor) {
   &:hover,
   &:focus-visible {
     color: $color;
@@ -17,7 +17,7 @@
     fill: currentColor;
   }
 
-  @include linkActive(white, $colorAccent);
+  @include linkFocused(white, $colorAccent);
 }
 
 .socials-link--theme-light {

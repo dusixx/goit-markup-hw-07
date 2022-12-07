@@ -99,14 +99,14 @@
 .ordering__text-input--with-notice {
   @extend %input-notice;
 
-  @include textInputActive("valid") {
+  @include textInputFocused("valid") {
     border-color: $colorSuccess;
     & ~ .ordering__field-icon {
       fill: $colorSuccess;
     }
   }
 
-  @include textInputActive("invalid") {
+  @include textInputFocused("invalid") {
     border-color: $colorWarn;
     & ~ .ordering__field-icon {
       fill: $colorWarn;
